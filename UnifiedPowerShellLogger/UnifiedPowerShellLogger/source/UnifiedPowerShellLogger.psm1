@@ -31,14 +31,14 @@ function Write-GBScreenLog {
 		[ValidateSet("OK", "Warning", "Error", "Info", "Verbose")]
 		[string]$Type,
 
-		[switch]$printTime
+		[switch]$NoTimestamp
 	)
 	
 	$screenXpos = [Math]::Truncate( $Host.UI.RawUI.WindowSize.Width - 11)
 	# Write the message to the screen
 	$now = ""
 
-	if( $printTime -eq $true) {
+	if( $NoTimestamp -ne $true) {
 		$now = ( Get-Date -Format "yyyy-MM-dd  HH:mm:ss")
 		$now = "$now | "
 	}
