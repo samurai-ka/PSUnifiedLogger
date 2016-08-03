@@ -27,7 +27,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Folder Include="docs\" />
     <Folder Include="test\" />
     <Folder Include="source\" />
   </ItemGroup>
