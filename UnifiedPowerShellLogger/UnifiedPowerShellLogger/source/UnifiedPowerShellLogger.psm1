@@ -1,39 +1,63 @@
 #requires -version 3.0
 <#
-	My Function
+.TOPIC
+    about_<subject or module name>
+
+.SHORT DESCRIPTION
+    A short, one-line description of the topic contents.
+
+.LONG DESCRIPTION
+    A detailed, full description of the subject or purpose of the module.
+
+.EXAMPLES
+    Examples of how to use the module or how the subject feature works in practice.
+
+.KEYWORDS
+    Terms or titles on which you might expect your users to search for the information in this topic.
+
+.SEE ALSO
+    Text-only references for further reading. Hyperlinks cannot work in the Windows PowerShell console. 
 #>
 
 function Write-GBScreenLog { 
-##
-## Write a log entry to the screen 
-##
+	Param ( 
+		[Parameter(
+			Position=0,
+			Mandatory=$True,
+			ValueFromPipeline=$true
+		)] 
+		[string]$Message,
 
-Param ( 
-	[Parameter( Mandatory=$True, Position=0) ] 
-	[string]$Message, 
-	[ValidateSet( "OK", "Warning", "Error",   "Info",   "Verbose") ]  
-	[string]$Type, 
-	[switch]$printTime 
-	) 
+		[ValidateSet("OK", "Warning", "Error", "Info", "Verbose")]
+		[string]$Type,
+
+		[switch]$printTime
+	)
 	
-	$screenXpos  =  [Math]::Truncate( $Host. UI. RawUI. WindowSize. Width  -  11)
-	#  Write  the  message  to  the  screen
-	$now  =  ""
-	if( $printTime  -eq  $true) {
-		$now  =  ( Get-Date  -Format  "yyyy-MM-dd  HH:mm:ss")
-		$now  =  "$now  |  "
+	$screenXpos = [Math]::Truncate( $Host.UI.RawUI.WindowSize.Width - 11)
+	# Write the message to the screen
+	$now = ""
+
+	if( $printTime -eq $true) {
+		$now = ( Get-Date -Format "yyyy-MM-dd  HH:mm:ss")
+		$now = "$now | "
 	}
+
     $Message = $now + $Message
     Write-Output $Message
-	if( $Type  -ne  "") { 
-		[Console]::SetCursorPosition( $screenXpos,   $Host. UI. RawUI. CursorPosition. Y-1)
+
+	if( $Type -ne "") { 
+		[Console]::SetCursorPosition( $screenXpos, $Host.UI.RawUI.CursorPosition.Y-1)
 	}
-	switch  ( $Type) {
-		"OK"  { Write-Output  -BackgroundColor  Green  -ForegroundColor  Black    "        OK        "}
-		"Warning"  { Write-Output  -BackgroundColor  Yellow  -ForegroundColor  Black  "    Warning  "}
-		"Error"  { Write-Output  -ForegroundColor  Yellow  -BackgroundColor  Red    "      Error    "}
-		"Info"  { Write-Output  -BackgroundColor  $Host. UI. RawUI. ForegroundColor  -ForegroundColor  $Host. UI. RawUI. BackgroundColor  "      Info      "}
-		"Verbose" {Write-Output -BackgroundColor $Host.UI.RawUI.ForegroundColor -ForegroundColor $Host.UI.RawUI.BackgroundColor "  Verbose "}
+
+	switch ($Type) {
+		"OK" {Write-Host -BackgroundColor	Green -ForegroundColor Black "   OK    "}
+		"Warning" {Write-Host -BackgroundColor Yellow -ForegroundColor Black " Warning "}
+		"Error" {Write-Host -ForegroundColor Yellow -BackgroundColor Red "  Error  "}
+		"Info" {Write-Host -BackgroundColor $Host.UI.RawUI.ForegroundColor -ForegroundColor $Host.UI.RawUI.BackgroundColor "   Info  "}
+		"Verbose"{Write-Host -BackgroundColor $Host.UI.RawUI.ForegroundColor -ForegroundColor $Host.UI.RawUI.BackgroundColor " Verbose "}
 	}
 }
-  
+
+### Exporting module members
+Export-ModuleMember -Function Write-GBScreenLog

@@ -27,6 +27,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Folder Include="source\de-DE\" />
     <Folder Include="test\" />
     <Folder Include="source\" />
   </ItemGroup>
