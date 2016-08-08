@@ -20,7 +20,7 @@
 #>
 
 function Write-GBScreenLog { 
-	Param ( 
+	Param (
 		[Parameter(
 			Position=0,
 			Mandatory=$True,
@@ -34,7 +34,7 @@ function Write-GBScreenLog {
 		[switch]$NoTimestamp
 	)
 	
-	$screenXpos = [Math]::Truncate( $Host.UI.RawUI.WindowSize.Width - 11)
+	$screenXpos = [Math]::Truncate( $Host.UI.RawUI.WindowSize.Width - 10)
 	# Write the message to the screen
 	$now = ""
 
@@ -51,11 +51,21 @@ function Write-GBScreenLog {
 	}
 
 	switch ($Type) {
-		"OK" {Write-Host -BackgroundColor	Green -ForegroundColor Black "   OK    "}
-		"Warning" {Write-Host -BackgroundColor Yellow -ForegroundColor Black " Warning "}
-		"Error" {Write-Host -ForegroundColor Yellow -BackgroundColor Red "  Error  "}
-		"Info" {Write-Host -BackgroundColor $Host.UI.RawUI.ForegroundColor -ForegroundColor $Host.UI.RawUI.BackgroundColor "   Info  "}
-		"Verbose"{Write-Host -BackgroundColor $Host.UI.RawUI.ForegroundColor -ForegroundColor $Host.UI.RawUI.BackgroundColor " Verbose "}
+		"OK" {
+			Write-Host -BackgroundColor	Green -ForegroundColor Black "   OK    "
+		}
+		"Warning" {
+			Write-Host -BackgroundColor Yellow -ForegroundColor Black " Warning "
+		}
+		"Error" {
+			Write-Host -ForegroundColor Yellow -BackgroundColor Red "  Error  "
+		}
+		"Info" {
+			Write-Host -BackgroundColor $Host.UI.RawUI.ForegroundColor -ForegroundColor $Host.UI.RawUI.BackgroundColor "  Info   "
+		}
+		"Verbose"{
+			Write-Host -BackgroundColor $Host.UI.RawUI.ForegroundColor -ForegroundColor $Host.UI.RawUI.BackgroundColor " Verbose "
+		}
 	}
 }
 
